@@ -1,0 +1,74 @@
+<script lang="javascript">
+
+var i;
+for (i = 0; i < 10; i++) {
+  setTimeout(function() {
+    console.log(i);
+  }, 100);
+}
+
+
+var myName = "hi";
+
+function myName() {
+    console.log("yuddomack");
+}
+function yourName() {
+    console.log("everyone");
+}
+
+var yourName = "bye";
+
+console.log(typeof myName);
+console.log(typeof yourName);
+////////////////////////////////////////////////////////////////////////////////////////
+/* 정상 출력 */
+function printName(firstname) { // 함수선언문
+  var result = inner(); // "선언 및 할당"
+  console.log(typeof inner); // > "function"
+  console.log("name is " + result); // > "name is inner value"
+  function inner() { // 함수선언문 
+    return "inner value";
+  }
+}
+printName(); // 함수 호출
+
+/** --- JS Parser 내부의 호이스팅(Hoisting)의 결과 - 위와 동일 --- // 정상 출력 */
+function printName(firstname) {
+  var result; // [Hoisting] var 변수 "선언"
+  function inner() { // [Hoisting] 함수선언문
+    return "inner value";
+  }
+  result = inner(); // "할당"
+  console.log(typeof inner); // > "function"
+  console.log("name is " + result); // > "name is inner value"
+}
+printName();
+
+////////////////////////////////////////////////////////////////////////////////////////
+foo();
+//foo2(); // ERROR!! 
+
+function foo() { // 함수선언문
+        console.log("hello");
+}
+var foo2 = function() { // 함수표현식
+        console.log("hello2");
+}
+foo2();
+
+/** --- JS Parser 내부의 호이스팅(Hoisting)의 결과 - 위와 동일 --- */
+var foo2; // [Hoisting] 함수표현식의 변수값 "선언"
+
+function foo() { // [Hoisting] 함수선언문
+        console.log("hello");
+}
+
+foo();
+//foo2(); // ERROR!! 
+
+foo2 = function() { 
+        console.log("hello2");
+}
+foo2();
+</script>
