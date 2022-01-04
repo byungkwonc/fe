@@ -1,5 +1,18 @@
 <script lang="javascript">
-
+function sum(base) {
+    var inClosure = base; // #1
+    return function (adder) { // #2
+      return inClosure + adder;
+    };
+}; // #3
+  
+var fiveAdder = sum(5); // #4: inClosure를 5로 설정하고 #2의 함수 리턴
+console.log(fiveAdder);
+console.log(fiveAdder(3)); // === inClosure(5) + adder(3) === 8
+var threeAdder = sum(3); // #5: inClosure를 3으로 설정하고 #2의 함수 리턴
+console.log(threeAdder);
+console.log(threeAdder(3)); // === inClosure(3) + adder(3) === 6
+/****************************************
 var i;
 for (i = 0; i < 10; i++) {
   setTimeout(function() {
@@ -7,6 +20,14 @@ for (i = 0; i < 10; i++) {
   }, 100);
 }
 
+var i;
+for (i = 0; i < 10; i++) {
+  (function(j) {
+    setTimeout(function() {
+      console.log(j);
+    }, 100);
+  })(i);
+}
 
 var myName = "hi";
 
@@ -22,7 +43,7 @@ var yourName = "bye";
 console.log(typeof myName);
 console.log(typeof yourName);
 ////////////////////////////////////////////////////////////////////////////////////////
-/* 정상 출력 */
+/// 정상 출력 ///
 function printName(firstname) { // 함수선언문
   var result = inner(); // "선언 및 할당"
   console.log(typeof inner); // > "function"
@@ -33,7 +54,7 @@ function printName(firstname) { // 함수선언문
 }
 printName(); // 함수 호출
 
-/** --- JS Parser 내부의 호이스팅(Hoisting)의 결과 - 위와 동일 --- // 정상 출력 */
+/// --- JS Parser 내부의 호이스팅(Hoisting)의 결과 - 위와 동일 --- // 정상 출력 ///
 function printName(firstname) {
   var result; // [Hoisting] var 변수 "선언"
   function inner() { // [Hoisting] 함수선언문
@@ -57,7 +78,7 @@ var foo2 = function() { // 함수표현식
 }
 foo2();
 
-/** --- JS Parser 내부의 호이스팅(Hoisting)의 결과 - 위와 동일 --- */
+/// --- JS Parser 내부의 호이스팅(Hoisting)의 결과 - 위와 동일 --- ///
 var foo2; // [Hoisting] 함수표현식의 변수값 "선언"
 
 function foo() { // [Hoisting] 함수선언문
@@ -71,4 +92,5 @@ foo2 = function() {
         console.log("hello2");
 }
 foo2();
+****************************************/
 </script>
