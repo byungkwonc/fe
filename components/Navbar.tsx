@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaBars, FaBuffer, FaTimes } from "react-icons/fa";
+import Link from 'next/link';
 
 const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
@@ -13,26 +14,16 @@ const Navbar = () => {
           <div className="flex space-x-4">
             {/* logo */}
             <div>
-              <a href="/" className="flex items-center py-5 px-2 text-gray-700">
+              <Link href={`/`} className="flex items-center py-5 px-2 text-gray-700">
                 <FaBuffer className="w-6 h-6" />
                 <span className="font-bold px-2">Home</span>
-              </a>
+              </Link>
             </div>
 
             {/* primary nav */}
             <div className="hidden md:flex items-center space-x-1">
-              <a
-                href="/features"
-                className="py-5 px-3 text-gray-700 hover:text-gray-900"
-              >
-                Features
-              </a>
-              <a
-                href="#"
-                className="py-5 px-3 text-gray-700 hover:text-gray-900"
-              >
-                Pricing
-              </a>
+              <Link href="/features" className="py-5 px-3 text-gray-700 hover:text-gray-900">Features</Link>
+              <Link href="#" className="py-5 px-3 text-gray-700 hover:text-gray-900">Pricing</Link>
             </div>
           </div>
           {/* secondary nav */}
@@ -50,15 +41,8 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="hidden md:flex items-center space-x-1">
-              <a href="/login" className="py-5 px-3">
-                Login
-              </a>
-              <a
-                href="/signup"
-                className="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300"
-              >
-                Signup
-              </a>
+              <Link href="/login" className="py-5 px-3">Login</Link>
+              <Link href="/signup" className="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300">Signup</Link>
             </div>
           )}
           {/* mobile menu */}
@@ -76,15 +60,8 @@ const Navbar = () => {
 
       {/* mobile menu items */}
       <div className={`${!menuToggle ? "hidden" : ""} md:hidden`}>
-        <a
-          href="/features"
-          className="block py-2 px-4 text-sm hover:bg-gray-200"
-        >
-          Features
-        </a>
-        <a href="#" className="block py-2 px-4 text-sm hover:bg-gray-200">
-          Pricing
-        </a>
+        <Link href="/features" className="block py-2 px-4 text-sm hover:bg-gray-200">Features</Link>
+        <Link href="#" className="block py-2 px-4 text-sm hover:bg-gray-200">Pricing</Link>
 
         {status === "authenticated" ? (
           <button
@@ -98,18 +75,8 @@ const Navbar = () => {
           </button>
         ) : (
           <div>
-            <a
-              href="/login"
-              className="block py-2 px-4 text-sm hover:bg-gray-200"
-            >
-              Login
-            </a>
-            <a
-              href="/signup"
-              className="block py-2 px-4 text-sm hover:bg-gray-200"
-            >
-              Signup
-            </a>
+            <Link href="/login" className="block py-2 px-4 text-sm hover:bg-gray-200">Login</Link>
+            <Link href="/signup" className="block py-2 px-4 text-sm hover:bg-gray-200">Signup</Link>
           </div>
         )}
       </div>
