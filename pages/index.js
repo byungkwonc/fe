@@ -18,7 +18,11 @@ export default function Home() {
   }, []);
 
   return (
-    <div style={{ textAlign: "center", }}>
+    <div
+      style={{
+        textAlign: "center",
+      }}
+    >
       <h1>CSR Time</h1>
       <main>
         <TimeSection
