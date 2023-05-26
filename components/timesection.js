@@ -1,7 +1,7 @@
 import React from "react";
 import { format } from "date-fns";
 
-import useRealTime from "../hooks/useRealTime";
+import useRealTime from "../hooks/useRealTimes";
 
 export default function TimeSection({ dateTime, title, description }) {
   const cleanDate = dateTime && format(new Date(dateTime), "kk:mm:ss O");
