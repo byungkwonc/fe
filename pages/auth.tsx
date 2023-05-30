@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { FaLock, FaLockOpen } from "react-icons/fa";
-// import { supabase } from "../lib/supabase";
+import { supabase } from "../lib/supabase";
 import classNames from "classnames";
 import { useFormFields } from "../lib/utils";
 import { useMessage } from "../lib/message";
