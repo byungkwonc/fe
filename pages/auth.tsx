@@ -1,35 +1,33 @@
 import React, { useState, useRef } from "react";
 import { FaLock, FaLockOpen } from "react-icons/fa";
-import { supabase } from "../lib/supabase";
+// import { supabase } from "../lib/supabase";
 import classNames from "classnames";
-import { useFormFields, MessageProps, useMessage } from "../lib/utils";
+import { useFormFields } from "../lib/utils";
+import { useMessage } from "../lib/message";
+import { useAuth } from "../lib/auth";
 
 type FormFieldProps = {
   email: string;
   password: string;
 };
 
-type SupabaseAuthPayload = FormFieldProps; // type alias
+// type SupabaseAuthPayload = FormFieldProps; // type alias
 
 const FORM_VALUES: FormFieldProps = {
   email: "",
   password: "",
 };
 
-const MESSAGE_VALUES: MessageProps = {
-  type: "default",
-  payload: "",
-};
-
 const Auth: React.FC = (props) => {
     const [isSignIn, setIsSignIn] = useState(true);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
+    const { loading, signIn, signUp } = useAuth();
   
+    // const { messages, handleMessage } = useMessage();
+    const { messages } = useMessage();
     const [values, handleChange, resetFormFields] =
       useFormFields<FormFieldProps>(FORM_VALUES);
-  
-    const [message, handleMessage] = useMessage<MessageProps>(MESSAGE_VALUES);
-  
+/*
     // sign-up a user with provided details
     const signUp = async (payload: SupabaseAuthPayload) => {
       try {
@@ -37,18 +35,17 @@ const Auth: React.FC = (props) => {
         const { error } = await supabase.auth.signUp(payload);
         if (error) {
           console.log(error);
-          handleMessage({ payload: error.message, type: "error" });
+          handleMessage({ message: error.message, type: "error" });
         } else {
           handleMessage({
-            payload:
-              "Signup successful. Please check your inbox for a confirmation email!",
+            message: "Signup successful. Please check your inbox for a confirmation email!",
             type: "success",
           });
         }
       } catch (error) {
         console.log(error);
         handleMessage({
-          payload: error.error_description || error,
+          message: error.error_description || error,
           type: "error",
         });
       } finally {
@@ -63,24 +60,24 @@ const Auth: React.FC = (props) => {
         const { error } = await supabase.auth.signInWithPassword(payload);
         if (error) {
           console.log(error);
-          handleMessage({ payload: error.message, type: "error" });
+          handleMessage({ message: error.message, type: "error" });
         } else {
           handleMessage({
-            payload: "Log in successful. I'll redirect you once I'm done",
+            message: "Log in successful. I'll redirect you once I'm done",
             type: "success",
           });
         }
       } catch (error) {
         console.log(error);
         handleMessage({
-          payload: error.error_description || error,
+          message: error.error_description || error,
           type: "error",
         });
       } finally {
         setLoading(false);
       }
     };
-  
+ */
     // Form submit handler to call the above function
     const handleSumbit = (event: React.FormEvent) => {
       event.preventDefault();
@@ -100,7 +97,7 @@ const Auth: React.FC = (props) => {
               {isSignIn ? "Log In" : "Sign Up"}
             </h1>
           </div>
-          {message.payload && (
+          {messages && messages.map((message, index) => (
             <div
               className={classNames(
                 "shadow-md rounded px-3 py-2 text-shadow transition-all mt-2 text-center",
@@ -111,9 +108,9 @@ const Auth: React.FC = (props) => {
                   : "bg-gray-100 text-gray-800"
               )}
             >
-              {message?.payload}
+              {message.message}
             </div>
-          )}
+          ))}
           <form
             onSubmit={handleSumbit}
             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"

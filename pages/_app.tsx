@@ -3,6 +3,8 @@ import Head from "next/head";
 import "../styles/globals.css";
 
 import Layout from "../components/Layout";
+import { MessageProvider } from "../lib/message";
+import { AuthProvider } from "../lib/auth";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -10,9 +12,13 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <MessageProvider>
+        <AuthProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </AuthProvider>
+      </MessageProvider>
     </React.Fragment>
   );
 }

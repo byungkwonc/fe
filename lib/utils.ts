@@ -13,7 +13,7 @@ export function useFormFields<T>(
     const resetFormFields = () => setValues(initialValues);
     return [values, handleChange, resetFormFields];
 }
-
+/*********************
 export type MessageType = "default" | "success" | "error";
 
 export type MessageProps = {
@@ -28,3 +28,4 @@ export function useMessage<MessageProps>(initialValues: MessageProps): [MessageP
     return [message, handleMessage];
 
 }
+************************/

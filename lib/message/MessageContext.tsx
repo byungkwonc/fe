@@ -1,4 +1,4 @@
-import { createContext, FunctionComponent, useState } from "react";
+import { Children, createContext, FunctionComponent, useState } from "react";
 import { MessageProps } from "./message.types";
 
 export type MessageContextProps = {
@@ -8,7 +8,7 @@ export type MessageContextProps = {
 
 export const MessageContext = createContext<Partial<MessageContextProps>>({});
 
-export const MessageProvider: FunctionComponent = ({ children }) => {
+export const MessageProvider: FunctionComponent = ({ children }: { children: React.ReactNode }) => {
     const [messages, setMessages] = useState<MessageProps[]>([]);
 
     const handleMessage = (message: MessageProps) => {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaLockOpen } from "react-icons/fa";
 import { supabase } from "../lib/supabase";
 import classNames from "classnames";
-import { useFormFields, MessageProps, useMessage } from "../lib/utils";
+import { useFormFields } from "../lib/utils";
 
 type SignInFieldProps = {
   email: string;
@@ -16,10 +16,10 @@ const FORM_VALUES: SignInFieldProps = {
   password: "",
 };
 
-const MESSAGE_VALUES: MessageProps = {
-  type: "default",
-  payload: "",
-};
+// const MESSAGE_VALUES: MessageProps = {
+//   type: "default",
+//   payload: "",
+// };
 
 const Login: React.FC = (props) => {
     const [loading, setLoading] = useState(false);
@@ -27,7 +27,7 @@ const Login: React.FC = (props) => {
     const [values, handleChange, resetFormFields] =
       useFormFields<SignInFieldProps>(FORM_VALUES);
   
-    const [message, handleMessage] = useMessage<MessageProps>(MESSAGE_VALUES);
+    // const [message, handleMessage] = useMessage<MessageProps>(MESSAGE_VALUES);
   
     // sign-in a user with provided details
     const signIn = async (payload: SupabaseSigninPayload) => {
@@ -36,10 +36,10 @@ const Login: React.FC = (props) => {
         const { error } = await supabase.auth.signInWithPassword(payload);
         if (error) {
           console.log(error);
-          handleMessage({ payload: error.message, type: "error" });
+          handleMessage({ message: error.message, type: "error" });
         } else {
           handleMessage({
-            payload: "Log in successful. I'll redirect you once I'm done",
+            message: "Log in successful. I'll redirect you once I'm done",
             type: "success",
           });
         }
