@@ -99,6 +99,7 @@ const Auth: React.FC = (props) => {
     };
 
     return (
+      // eslint-disable-next-line react/jsx-key
         <div className="container px-5 py-10 mx-auto w-2/3">
           <div className="w-full text-center mb-4 flex  flex-col place-items-center">
             {isSignIn ? (
