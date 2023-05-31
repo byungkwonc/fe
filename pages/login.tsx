@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaLockOpen } from "react-icons/fa";
 import { supabase } from "../lib/supabase";
 import classNames from "classnames";
-import { useFormFields } from "../lib/utils";
+import { useFormFields, MessageProps, useMessage } from "../lib/utils";
 
 type SignInFieldProps = {
   email: string;
@@ -16,10 +16,10 @@ const FORM_VALUES: SignInFieldProps = {
   password: "",
 };
 
-// const MESSAGE_VALUES: MessageProps = {
-//   type: "default",
-//   payload: "",
-// };
+const MESSAGE_VALUES: MessageProps = {
+  type: "default",
+  payload: "",
+};
 
 const Login: React.FC = (props) => {
     const [loading, setLoading] = useState(false);
@@ -27,7 +27,7 @@ const Login: React.FC = (props) => {
     const [values, handleChange, resetFormFields] =
       useFormFields<SignInFieldProps>(FORM_VALUES);
   
-    // const [message, handleMessage] = useMessage<MessageProps>(MESSAGE_VALUES);
+    const [message, handleMessage] = useMessage<MessageProps>(MESSAGE_VALUES);
   
     // sign-in a user with provided details
     const signIn = async (payload: SupabaseSigninPayload) => {

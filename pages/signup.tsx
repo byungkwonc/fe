@@ -11,12 +11,12 @@ type SignUpFieldProps = {
 
 type SupabaseSignupPayload = SignUpFieldProps; // type alias
 
-const FORM_VALUES: SignUpFieldProps = {
+const FORM_VALUES: SignUpFieldProps = { //초기값. useFormFields의 values 객체가 위 email, password 값을 가지는 react state객체가 됨
   email: "",
   password: "",
 };
 
-const MESSAGE_VALUES: MessageProps = {
+const MESSAGE_VALUES: MessageProps = { //초기값. useMessage 혹에서 리턴되는 message 객체가 type, plyload 값을 가지는 react state객체가 됨
   type: "default",
   payload: "",
 };
@@ -39,8 +39,7 @@ const Signup: React.FC = (props) => {
         handleMessage({ payload: error.message, type: "error" });
       } else {
         handleMessage({
-          payload:
-            "Signup successful. Please check your inbox for a confirmation email!",
+          payload: "Signup successful. Please check your inbox for a confirmation email!",
           type: "success",
         });
       }
@@ -58,8 +57,8 @@ const Signup: React.FC = (props) => {
   // Form submit handler to call the above function
   const handleSumbit = (event: React.FormEvent) => {
     event.preventDefault();
-    signUp(values);
-    resetFormFields();
+    signUp(values);     //useFormFields 훅에서 리턴된 values 객체
+    resetFormFields();  //useFormFields 훅에서 리턴되는 함수
   };
 
   return (
@@ -102,8 +101,8 @@ const Signup: React.FC = (props) => {
             type="email"
             placeholder="Your Email"
             required
-            value={values.email}
-            onChange={handleChange}
+            value={values.email}    //useFormFields 훅의 values 객체를 참조
+            onChange={handleChange} //useFormFields 부분의 handleChange 함수를 할당
           />
         </div>
         <div className="mb-6">

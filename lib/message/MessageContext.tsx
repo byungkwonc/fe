@@ -1,9 +1,18 @@
-import { Children, createContext, FunctionComponent, useState } from "react";
+import { createContext, FunctionComponent, useState } from "react";
 import { MessageProps } from "./message.types";
+
+/*
+export function useMessage<MessageProps>(initialValues: MessageProps): [MessageProps, (mes: MessageProps) => void] {
+  const [message, setMessage] = useState<MessageProps>(initialValues);
+
+  const handleMessage = (mes: MessageProps) => setMessage(mes);
+  return [message, handleMessage];
+}
+*/
 
 export type MessageContextProps = {
     messages: MessageProps[];
-    handleMessage: (MessageProps) => void;
+    handleMessage: (mes: MessageProps) => void;
   };
 
 export const MessageContext = createContext<Partial<MessageContextProps>>({});
