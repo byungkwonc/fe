@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { FaLock } from "react-icons/fa";
 import { supabase } from "../lib/supabase";
 import classNames from "classnames";
-import { useFormFields, MessageProps, useMessage } from "../lib/utils";
+import { useFormFields, MessageProps, useMessage } from "../lib/utils_b4auth";
 
 type SignUpFieldProps = {
   email: string;

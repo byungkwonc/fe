@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaLockOpen } from "react-icons/fa";
 import { supabase } from "../lib/supabase";
 import classNames from "classnames";
-import { useFormFields, MessageProps, useMessage } from "../lib/utils";
+import { useFormFields, MessageProps, useMessage } from "../lib/utils_b4auth";
 
 type SignInFieldProps = {
   email: string;
@@ -36,10 +36,10 @@ const Login: React.FC = (props) => {
         const { error } = await supabase.auth.signInWithPassword(payload);
         if (error) {
           console.log(error);
-          handleMessage({ message: error.message, type: "error" });
+          handleMessage({ payload: error.message, type: "error" });
         } else {
           handleMessage({
-            message: "Log in successful. I'll redirect you once I'm done",
+            payload: "Log in successful. I'll redirect you once I'm done",
             type: "success",
           });
         }
