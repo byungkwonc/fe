@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useAuth } from "../lib/auth";
 
 const Navbar = () => {
+  const [isSignIn, setIsSignIn] = useState(true);
   const [menuToggle, setMenuToggle] = useState(false);
   const { user, loggedIn, signOut } = useAuth();
 
