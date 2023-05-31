@@ -112,6 +112,7 @@ const Auth: React.FC = (props) => {
             </h1>
           </div>
           {/* message.payload && ( */messages && messages.map((message, index) => (
+            // eslint-disable-next-line react/jsx-key
             <div
               className={classNames(
                 "shadow-md rounded px-3 py-2 text-shadow transition-all mt-2 text-center",
