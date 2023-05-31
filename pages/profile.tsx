@@ -19,7 +19,7 @@ const ProfilePage = ({}) => {
           <br />
           Please{"  "}
           <Link href="/auth" className="font-bold text-blue-500">Log In</Link>{" "}
-          to view the page's full content.
+          to view the page&apos;s full content.
         </div>
       )}
       {user && (
