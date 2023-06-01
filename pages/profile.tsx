@@ -1,12 +1,37 @@
 import Link from "next/link";
 import { useAuth } from "../lib/auth";
 
-const ProfilePage = ({}) => {
-  const { user, loading, signOut } = useAuth();
+// client side 보안 적용
+// import { useEffect } from "react";
+// import Router from "next/router";
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+// server side 보안 적용
+// import { GetServerSideProps } from "next";
+// import { supabase } from "../lib/supabase";
+// import { User } from "@supabase/supabase-js";
+import { User, createPagesServerClient } from '@supabase/auth-helpers-nextjs'
+import { GetServerSidePropsContext } from 'next'
+
+const ProfilePage = ({ user }) => {
+  // 보안 없음
+  // const { user, loading, signOut } = useAuth();
+
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // client side 보안 적용
+/*
+  const { user, signOut, userLoading, loggedIn } = useAuth();
+  useEffect(() => {
+    if (!userLoading && !loggedIn) {
+      Router.push("/auth");
+    }
+  }, [userLoading, loggedIn]);
+*/
+  
+  // server side 보안 적용
+  const { signOut } = useAuth();
 
   return (
     <div className="flex flex-col items-center justify-start py-36 min-h-screen">
@@ -37,3 +62,47 @@ const ProfilePage = ({}) => {
 };
 
 export default ProfilePage;
+
+// server side 보안 적용
+export type NextAppPageUserProps = {
+  props: {
+    user: User;
+    loggedIn: boolean;
+  };
+};
+
+export type NextAppPageRedirProps = {
+  redirect: {
+    destination: string;
+    permanent: boolean;
+  };
+};
+
+export type NextAppPageServerSideProps =
+  | NextAppPageUserProps
+  | NextAppPageRedirProps;
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  // Create authenticated Supabase Client
+  const supabase = createPagesServerClient(ctx)
+  // Check if we have a session
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+ 
+  if (!session.user) {
+    return {
+      redirect: {
+        destination: "/auth",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      user: session.user,
+      loggedIn: !!session.user,
+    },
+  };
+};

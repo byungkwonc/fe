@@ -14,11 +14,12 @@ export type AuthContextProps = {
   signOut: () => void;
   loggedIn: boolean;
   userLoading: boolean;
+  children: React.ReactNode;
 };
 
 export const AuthContext = createContext<Partial<AuthContextProps>>({});
 
-export const AuthProvider: FunctionComponent = ({ children }: { children: React.ReactNode }) => {
+export const AuthProvider: FunctionComponent<AuthContextProps> = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const { handleMessage } = useMessage();
   
@@ -88,7 +89,7 @@ export const AuthProvider: FunctionComponent = ({ children }: { children: React.
 
   useEffect(() => {
       // const user = supabase.auth.user();
-      const user = supabase.auth.getSession();
+      //const user = supabase.auth.getSession();
   
       if (user) {
         setUser(user);

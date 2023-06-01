@@ -3,8 +3,8 @@ import Head from "next/head";
 import "../styles/globals.css";
 
 import Layout from "../components/Layout";
-import { AuthProvider } from "../lib/auth";
 import { MessageProvider } from "../lib/message";
+import { AuthProvider } from "../lib/auth";
 
 function MyApp({ Component, pageProps }) {
   return (
