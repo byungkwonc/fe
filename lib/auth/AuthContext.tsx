@@ -1,8 +1,7 @@
 // import { createContext, FunctionComponent, useState } from "react";
 import { createContext, FunctionComponent, useState, useEffect } from "react";
 import Router from "next/router";
-// import { User } from "@supabase/supabase-js";
-import { AuthChangeEvent, User, Session} from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 import { supabase } from "../supabase";
 import { useMessage, MessageProps } from "../message";
 import { SupabaseAuthPayload } from "./auth.types";
@@ -15,12 +14,12 @@ export type AuthContextProps = {
   signOut: () => void;
   loggedIn: boolean;
   userLoading: boolean;
-  children: React.ReactNode;
 };
+export type PropsWithChildren<P> = P & { children?: React.ReactNode | undefined };
 
 export const AuthContext = createContext<Partial<AuthContextProps>>({});
 
-export const AuthProvider: FunctionComponent<AuthContextProps> = ({ children }) => {
+export const AuthProvider: FunctionComponent<PropsWithChildren<AuthContextProps>> = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const { handleMessage } = useMessage();
   
@@ -82,15 +81,6 @@ export const AuthProvider: FunctionComponent<AuthContextProps> = ({ children }) 
     // sign-out a user
     const signOut = async () => await supabase.auth.signOut();
 
-    const setServerSession = async (event: AuthChangeEvent, session: Session) => {
-      await fetch("/api/auth", {
-        method: "POST",
-        headers: new Headers({ "Content-Type": "application/json" }),
-        credentials: "same-origin",
-        body: JSON.stringify({ event, session }),
-      });
-    };
-
   // 로그인한 유저의 액션에 따라서 페이지를 달리 보여줘야 하기 때문에 유저의 액션 상태를 항상 체크
   // supabase에서는 supabase.auth.onAuthStateChange(async(event, session) => {... }) 함수를 지원
   // event 파라미터는 'SIGNED_IN' | 'SIGNED_OUT' | 'USER_UPDATED' | 'PASSWORD_RECOVERY'
@@ -114,7 +104,6 @@ export const AuthProvider: FunctionComponent<AuthContextProps> = ({ children }) 
         async (event, session) => {
           const user = session?.user! ?? null;
           setUserLoading(false);
-          await setServerSession(event, session);
           if (user) {
             setUser(user);
             setLoggedIn(true);
@@ -135,7 +124,7 @@ export const AuthProvider: FunctionComponent<AuthContextProps> = ({ children }) 
 
   return (
     <AuthContext.Provider value={{ signUp, signIn, loading, user, signOut, loggedIn, userLoading }}>
-      {children}
+      { children }
     </AuthContext.Provider>
   );
 };

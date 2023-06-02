@@ -13,12 +13,12 @@ export function useMessage<MessageProps>(initialValues: MessageProps): [MessageP
 export type MessageContextProps = {
     messages: MessageProps[];
     handleMessage: (mes: MessageProps) => void;
-    children: React.ReactNode;
   };
+export type PropsWithChildren<P> = P & { children?: React.ReactNode | undefined };
 
 export const MessageContext = createContext<Partial<MessageContextProps>>({});
 
-export const MessageProvider: FunctionComponent<MessageContextProps> = ({ children }) => {
+export const MessageProvider: FunctionComponent<PropsWithChildren<MessageContextProps>> = ({ children }) => {
     const [messages, setMessages] = useState<MessageProps[]>([]);
 
     const handleMessage = (message: MessageProps) => {
@@ -30,7 +30,7 @@ export const MessageProvider: FunctionComponent<MessageContextProps> = ({ childr
   
     return (
       <MessageContext.Provider value={{ messages, handleMessage }}>
-        {children}
+        { children }
       </MessageContext.Provider>
     );
 };

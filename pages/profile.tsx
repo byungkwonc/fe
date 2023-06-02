@@ -2,15 +2,10 @@ import Link from "next/link";
 import { useAuth } from "../lib/auth";
 
 // client side 보안 적용
-// import { useEffect } from "react";
-// import Router from "next/router";
+import { useEffect } from "react";
+import Router from "next/router";
 
-// server side 보안 적용
-import { GetServerSideProps } from "next";
-import { supabase } from "../lib/supabase";
-import { User } from "@supabase/supabase-js";
-
-const ProfilePage = ({ user }) => {
+const ProfilePage = ({}) => {
   // 보안 없음
   // const { user, loading, signOut } = useAuth();
 
@@ -19,17 +14,14 @@ const ProfilePage = ({ user }) => {
   // }
 
   // client side 보안 적용
-/*
   const { user, signOut, userLoading, loggedIn } = useAuth();
+
   useEffect(() => {
     if (!userLoading && !loggedIn) {
       Router.push("/auth");
     }
   }, [userLoading, loggedIn]);
-*/
-  
-  // server side 보안 적용
-  const { signOut } = useAuth();
+
 
   return (
     <div className="flex flex-col items-center justify-start py-36 min-h-screen">
@@ -60,43 +52,3 @@ const ProfilePage = ({ user }) => {
 };
 
 export default ProfilePage;
-
-// server side 보안 적용
-// export type NextAppPageUserProps = {
-//   props: {
-//     user: User;
-//     loggedIn: boolean;
-//   };
-// };
-
-// export type NextAppPageRedirProps = {
-//   redirect: {
-//     destination: string;
-//     permanent: boolean;
-//   };
-// };
-
-// export type NextAppPageServerSideProps =
-//   | NextAppPageUserProps
-//   | NextAppPageRedirProps;
-
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  // Check if we have a session
-  const session = async () => await supabase.auth.getSession();
- 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      user: session.name,
-      loggedIn: !!session.name,
-    },
-  };
-};
