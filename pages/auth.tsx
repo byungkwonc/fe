@@ -32,8 +32,7 @@ const Auth: React.FC = (props) => {
     // const [message, handleMessage] = useMessage<MessageProps>(MESSAGE_VALUES);
     // const { messages, handleMessage } = useMessage();
     const { messages } = useMessage();
-    const [values, handleChange, resetFormFields] =
-      useFormFields<FormFieldProps>(FORM_VALUES);
+    const [values, handleChange, resetFormFields] = useFormFields<FormFieldProps>(FORM_VALUES);
 /* 
     // sign-up a user with provided details
     const signUp = async (payload: SupabaseAuthPayload) => {

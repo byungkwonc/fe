@@ -29,12 +29,7 @@ export const MessageProvider: FunctionComponent<MessageContextProps> = ({ childr
     };
   
     return (
-      <MessageContext.Provider
-        value={{
-          messages,
-          handleMessage,
-        }}
-      >
+      <MessageContext.Provider value={{ messages, handleMessage }}>
         {children}
       </MessageContext.Provider>
     );

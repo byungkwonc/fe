@@ -6,11 +6,9 @@ import { useAuth } from "../lib/auth";
 // import Router from "next/router";
 
 // server side 보안 적용
-// import { GetServerSideProps } from "next";
-// import { supabase } from "../lib/supabase";
-// import { User } from "@supabase/supabase-js";
-import { User, createPagesServerClient } from '@supabase/auth-helpers-nextjs'
-import { GetServerSidePropsContext } from 'next'
+import { GetServerSideProps } from "next";
+import { supabase } from "../lib/supabase";
+import { User } from "@supabase/supabase-js";
 
 const ProfilePage = ({ user }) => {
   // 보안 없음
@@ -64,33 +62,29 @@ const ProfilePage = ({ user }) => {
 export default ProfilePage;
 
 // server side 보안 적용
-export type NextAppPageUserProps = {
-  props: {
-    user: User;
-    loggedIn: boolean;
-  };
-};
+// export type NextAppPageUserProps = {
+//   props: {
+//     user: User;
+//     loggedIn: boolean;
+//   };
+// };
 
-export type NextAppPageRedirProps = {
-  redirect: {
-    destination: string;
-    permanent: boolean;
-  };
-};
+// export type NextAppPageRedirProps = {
+//   redirect: {
+//     destination: string;
+//     permanent: boolean;
+//   };
+// };
 
-export type NextAppPageServerSideProps =
-  | NextAppPageUserProps
-  | NextAppPageRedirProps;
+// export type NextAppPageServerSideProps =
+//   | NextAppPageUserProps
+//   | NextAppPageRedirProps;
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  // Create authenticated Supabase Client
-  const supabase = createPagesServerClient(ctx)
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   // Check if we have a session
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  const session = async () => await supabase.auth.getSession();
  
-  if (!session.user) {
+  if (!session) {
     return {
       redirect: {
         destination: "/auth",
@@ -101,8 +95,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   return {
     props: {
-      user: session.user,
-      loggedIn: !!session.user,
+      user: session.name,
+      loggedIn: !!session.name,
     },
   };
 };
