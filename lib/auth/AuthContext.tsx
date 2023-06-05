@@ -1,5 +1,5 @@
 // import { createContext, FunctionComponent, useState } from "react";
-import { createContext, FunctionComponent, useState, useEffect } from "react";
+import { createContext, FunctionComponent, useState, useEffect, SyntheticEvent } from "react";
 import Router from "next/router";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "../supabase";
@@ -14,6 +14,7 @@ export type AuthContextProps = {
   signOut: () => void;
   loggedIn: boolean;
   userLoading: boolean;
+  signInWithGithub: (evt: SyntheticEvent) => void;
 };
 export type PropsWithChildren<P> = P & { children?: React.ReactNode | undefined };
 
@@ -81,6 +82,12 @@ export const AuthProvider: FunctionComponent<PropsWithChildren<AuthContextProps>
     // sign-out a user
     const signOut = async () => await supabase.auth.signOut();
 
+    // sign-in with github
+    const signInWithGithub = async (evt: SyntheticEvent) => {
+      evt.preventDefault();
+      await supabase.auth.signInWithOAuth({ provider: "github" });
+    };
+
   // 로그인한 유저의 액션에 따라서 페이지를 달리 보여줘야 하기 때문에 유저의 액션 상태를 항상 체크
   // supabase에서는 supabase.auth.onAuthStateChange(async(event, session) => {... }) 함수를 지원
   // event 파라미터는 'SIGNED_IN' | 'SIGNED_OUT' | 'USER_UPDATED' | 'PASSWORD_RECOVERY'
@@ -123,7 +130,7 @@ export const AuthProvider: FunctionComponent<PropsWithChildren<AuthContextProps>
     }, []);
 
   return (
-    <AuthContext.Provider value={{ signUp, signIn, loading, user, signOut, loggedIn, userLoading }}>
+    <AuthContext.Provider value={{ signUp, signIn, loading, user, signOut, loggedIn, userLoading, signInWithGithub }}>
       { children }
     </AuthContext.Provider>
   );

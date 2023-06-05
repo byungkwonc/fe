@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { FaLock, FaLockOpen } from "react-icons/fa";
+import { FaLock, FaLockOpen, FaGithub } from "react-icons/fa";
 // import { supabase } from "../lib/supabase";
 import classNames from "classnames";
 // import { useFormFields, MessageProps, useMessage } from "../lib/utils";
@@ -27,7 +27,7 @@ const FORM_VALUES: FormFieldProps = {
 const Auth: React.FC = (props) => {
     const [isSignIn, setIsSignIn] = useState(true);
     // const [loading, setLoading] = useState(false);
-    const { loading, signIn, signUp } = useAuth();
+    const { loading, signIn, signUp, signInWithGithub } = useAuth();
   
     // const [message, handleMessage] = useMessage<MessageProps>(MESSAGE_VALUES);
     // const { messages, handleMessage } = useMessage();
@@ -129,6 +129,14 @@ const Auth: React.FC = (props) => {
             onSubmit={handleSumbit}
             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           >
+            <button
+              onClick={signInWithGithub}
+              className="flex-1 bg-gray-200 text-green-700 py-3 rounded w-full text-center shadow"
+            >
+              <FaGithub className="inline-block text-2xl" />{" "}
+              {isSignIn ? "Log In" : "Sign Up"} with <strong>Github</strong>
+            </button>
+            <hr className="my-4" />
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
