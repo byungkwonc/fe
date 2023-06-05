@@ -12,13 +12,13 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
-      <MessageProvider>
-        <AuthProvider>
+      <MessageProvider.bind>
+        <AuthProvider.bind>
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </AuthProvider>
-      </MessageProvider>
+        </AuthProvider.bind>
+      </MessageProvider.bind>
     </React.Fragment>
   );
 }
